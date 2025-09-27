@@ -6,7 +6,7 @@ interface CourseListProps {
 
 const CourseList = ({ courses }: CourseListProps) => {
     return (
-        courses.map(course => <p>{course.term} CS {course.number}: {course.title}</p>)
+        courses.map(course => <p className="text-left p-3">{course.term} CS {course.number}: {course.title}</p>)
     );
 }
 

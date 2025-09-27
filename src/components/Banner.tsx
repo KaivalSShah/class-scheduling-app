@@ -5,7 +5,7 @@ interface BannerProps {
 
 const Banner = ({ banner }: BannerProps) => {
     return (
-        <h1>{banner}</h1>
+        <h1 className="text-3xl text-left p-3">{banner}</h1>
     );
 }
 
