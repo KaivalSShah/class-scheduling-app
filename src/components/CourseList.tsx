@@ -1,4 +1,5 @@
 import type { Course } from '../types';
+import Card from './Card';
 
 interface CourseListProps {
     courses: Course[]
@@ -6,7 +7,9 @@ interface CourseListProps {
 
 const CourseList = ({ courses }: CourseListProps) => {
     return (
-        courses.map(course => <p className="text-left p-3">{course.term} CS {course.number}: {course.title}</p>)
+        <div className="grid grid-cols-4 px-4 gap-4">
+            {courses.map(course => <Card course={course}/>)}
+        </div>
     );
 }
 
