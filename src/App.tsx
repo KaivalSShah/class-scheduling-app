@@ -1,42 +1,20 @@
 import Banner from './components/Banner';
 import CourseList from './components/CourseList';
-import type { Course } from './types';
-
-const schedule = {
-  "title": "CS Courses for 2018-2019",
-  "courses": {
-    "F101" : {
-      "term": "Fall",
-      "number": "101",
-      "meets" : "MWF 11:00-11:50",
-      "title" : "Computer Science: Concepts, Philosophy, and Connections"
-    },
-    "F110" : {
-      "term": "Fall",
-      "number": "110",
-      "meets" : "MWF 10:00-10:50",
-      "title" : "Intro Programming for non-majors"
-    },
-    "S313" : {
-      "term": "Spring",
-      "number": "313",
-      "meets" : "TuTh 15:30-16:50",
-      "title" : "Tangible Interaction Design and Learning"
-    },
-    "S314" : {
-      "term": "Spring",
-      "number": "314",
-      "meets" : "TuTh 9:30-10:50",
-      "title" : "Tech & Human Interaction"
-    }
-  }
-};
+import type { Course, Courses } from './types';
+import { useJsonQuery } from './utilities/fetch';
 
 const App = () => {
-  const courses: Course[] = Object.values(schedule.courses)
+  const [scheduleData, isLoading, error] = useJsonQuery<Courses>('https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php');
+  
+  if (error) { <h1>Error loading the data</h1>};
+  if (isLoading) {<h1>Data is loading</h1>};
+  if (!scheduleData) { return null;}
+  
+  const courses: Course[] = Object.values(scheduleData.courses)
+
   return (
     <div className="text-center">
-      <Banner banner={schedule.title}/>
+      <Banner banner={scheduleData.title}/>
       <CourseList courses={courses}/>
     </div>
   )

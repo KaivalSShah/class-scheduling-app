@@ -4,3 +4,8 @@ export interface Course {
     meets: string;
     title: string;
 }
+
+export type Courses = {
+    title: string;
+    courses: Record<string, Course>;
+}
