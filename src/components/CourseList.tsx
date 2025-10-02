@@ -3,12 +3,15 @@ import Card from './Card';
 
 interface CourseListProps {
     courses: Course[]
+    term: string;
 }
 
-const CourseList = ({ courses }: CourseListProps) => {
+const CourseList = ({ courses, term}: CourseListProps) => {
     return (
         <div className="grid grid-cols-4 px-4 gap-4">
-            {courses.map(course => <Card course={course}/>)}
+            {courses
+                .filter(course => course.term === term)
+                .map(course => <Card course={course}/>)}
         </div>
     );
 }

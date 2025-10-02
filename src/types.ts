@@ -5,7 +5,7 @@ export interface Course {
     title: string;
 }
 
-export type Courses = {
+export type CourseSchedule = {
     title: string;
     courses: Record<string, Course>;
 }

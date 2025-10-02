@@ -1,10 +1,10 @@
 import Banner from './components/Banner';
-import CourseList from './components/CourseList';
-import type { Course, Courses } from './types';
+import TermPage from './components/TermPage';
+import type { Course, CourseSchedule } from './types';
 import { useJsonQuery } from './utilities/fetch';
 
 const App = () => {
-  const [scheduleData, isLoading, error] = useJsonQuery<Courses>('https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php');
+  const [scheduleData, isLoading, error] = useJsonQuery<CourseSchedule>('https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php');
   
   if (error) { <h1>Error loading the data</h1>};
   if (isLoading) {<h1>Data is loading</h1>};
@@ -15,7 +15,7 @@ const App = () => {
   return (
     <div className="text-center">
       <Banner banner={scheduleData.title}/>
-      <CourseList courses={courses}/>
+      <TermPage courses={courses}/>
     </div>
   )
 }
