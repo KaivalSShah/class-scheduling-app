@@ -2,11 +2,14 @@ import type { Course } from '../types';
 
 export interface CardProps {
     course: Course
+    changeSelectedCourses: (update: Course) => void;
+    isSelected: Boolean
 }
 
-const Card = ({ course }: CardProps) => {
+const Card = ({ course, changeSelectedCourses, isSelected }: CardProps) => {
     return (
-        <div className="border-2 border-gray-400 border-solid rounded-[1vw] flex flex-col p-5 text-left h-full">
+        <button onClick={() => changeSelectedCourses(course)}
+            className={`border-2 border-gray-400 border-solid rounded-[1vw] flex flex-col p-5 text-left h-full ${isSelected ? "bg-blue-200" : ""}`}>
             <div className="space-y-4">
                 <h1 className="text-2xl mb-4">{course.term} CS {course.number}</h1>
                 <p className="text-base text-gray-800 mb-4">{course.title}</p>
@@ -15,7 +18,7 @@ const Card = ({ course }: CardProps) => {
                 <div className="border-t border-gray-300 mb-4"></div>
                 <p className="text-base text-gray-800">{course.meets}</p>
             </div>
-        </div>
+        </button>
     );
 }
 
