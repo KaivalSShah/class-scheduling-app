@@ -22,9 +22,8 @@ const CourseList = ({ courses, term, selectedCourses, onChange}: CourseListProps
             {courses
                 .filter(course => course.term === term)
                 .map(course => {
-                    const isSelected = selectedCourses.some(c => c.title === course.title && c.number === course.number)
-                    console.log(course.number + course.title)
-                    return <Card key={course.number + course.title} course={course} changeSelectedCourses={toggleSelectedCourses} isSelected={isSelected}/>
+                    const isSelected = selectedCourses.some(c => c === course)
+                    return <Card key={course.number + course.title + course.term + course.meets} course={course} changeSelectedCourses={toggleSelectedCourses} isSelected={isSelected}/>
                 })}
         </div >
     );
