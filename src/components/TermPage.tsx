@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import TermSelector from "./TermSelector"
 import CourseList from "./CourseList";
 import type { Course } from "../types";
