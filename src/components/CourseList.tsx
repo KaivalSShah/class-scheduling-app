@@ -1,5 +1,6 @@
 import type { Course } from '../types';
 import Card from './Card';
+import { isDayConflict, isTermConflict, isTimeConflict } from '../utilities/checkConflicts';
 
 interface CourseListProps {
     courses: Course[];
@@ -12,7 +13,7 @@ const toggleList = <T,>(x: T, lst: T[]): T[] => (
     lst.includes(x) ? lst.filter(y => y !== x) : [...lst, x]
 );
 
-const CourseList = ({ courses, term, selectedCourses, onChange}: CourseListProps) => {
+const CourseList = ({ courses, term, selectedCourses, onChange }: CourseListProps) => {
     const toggleSelectedCourses = (course: Course) => {
         console.log(selectedCourses)
         onChange(toggleList(course, selectedCourses))
@@ -23,7 +24,13 @@ const CourseList = ({ courses, term, selectedCourses, onChange}: CourseListProps
                 .filter(course => course.term === term)
                 .map(course => {
                     const isSelected = selectedCourses.some(c => c === course)
-                    return <Card key={course.number + course.title + course.term + course.meets} course={course} changeSelectedCourses={toggleSelectedCourses} isSelected={isSelected}/>
+                    const isConflict = !isSelected && isDayConflict(course, selectedCourses) && isTimeConflict(course, selectedCourses) && isTermConflict(course, selectedCourses);
+                    console.log("isconflict", isConflict);
+                    return <Card key={course.number + course.title + course.term + course.meets}
+                        course={course}
+                        changeSelectedCourses={toggleSelectedCourses}
+                        isSelected={isSelected}
+                        isConflict={isConflict} />
                 })}
         </div >
     );
