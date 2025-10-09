@@ -1,6 +1,6 @@
 import type { Course } from '../types';
 import Card from './Card';
-import { isDayConflict, isTermConflict, isTimeConflict } from '../utilities/checkConflicts';
+import {hasConflict } from '../utilities/checkConflicts';
 
 interface CourseListProps {
     courses: Course[];
@@ -24,7 +24,7 @@ const CourseList = ({ courses, term, selectedCourses, onChange }: CourseListProp
                 .filter(course => course.term === term)
                 .map(course => {
                     const isSelected = selectedCourses.some(c => c === course)
-                    const isConflict = !isSelected && isDayConflict(course, selectedCourses) && isTimeConflict(course, selectedCourses) && isTermConflict(course, selectedCourses);
+                    const isConflict = !isSelected && hasConflict(course, selectedCourses);
                     console.log("isconflict", isConflict);
                     return <Card key={course.number + course.title + course.term + course.meets}
                         course={course}

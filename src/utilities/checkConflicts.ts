@@ -1,30 +1,14 @@
 import type { Course } from '../types'
 
-export function isTermConflict(course: Course, selectedCourses: Course[]): boolean {
-    const conflicting = selectedCourses.filter(selectedCourse => selectedCourse.term === course.term)
-    return conflicting.length !== 0
-}
-
-export function isDayConflict(course: Course, selectedCourses: Course[]): boolean {
-    const conflicting = selectedCourses.filter(selectedCourse => setHasCommonElement(parseDays(selectedCourse.meets), parseDays(course.meets)))
-    return conflicting.length !== 0
-}
-
-export function isTimeConflict(course: Course, selectedCourses: Course[]): boolean {
-    const conflicting = selectedCourses.filter(selectedCourse => {
-        const [start1, end1] = parseTimespan(selectedCourse.meets);
+export function hasConflict(course: Course, selectedCourses: Course[]): boolean {
+    return selectedCourses.some(selectedCourses => {
+        const sameTerm = selectedCourses.term === course.term;
+        const sameDays = setHasCommonElement(parseDays(selectedCourses.meets), parseDays(course.meets));
+        const [start1, end1] = parseTimespan(selectedCourses.meets);
         const [start2, end2] = parseTimespan(course.meets);
-        if (start1 && start2 && end1 && end2) {
-            if (start2 >= start1 && start2 <= end1) {
-                return true
-            }
-            else if (end2 <= end1 && end2 >= start1) {
-                return true
-            }
-        }
-        return false;
+        const hasOverlap = (start1 && start2 && end1 && end2) && (start2 < end1 && end2 > start1);
+        return sameTerm && sameDays && hasOverlap;
     })
-    return conflicting.length > 0;
 }
 
 function parseDays(meeting: string) {
