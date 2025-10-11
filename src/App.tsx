@@ -1,10 +1,10 @@
 import Banner from './components/Banner';
 import TermPage from './components/TermPage';
-import type { Course, CourseSchedule } from './types';
-import { useJsonQuery } from './utilities/fetch';
+import type { Course } from './types';
+import { useCourseContext } from './utilities/CourseContext';
 
 const App = () => {
-  const [scheduleData, isLoading, error] = useJsonQuery<CourseSchedule>('https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php');
+  const { scheduleData, isLoading, error } = useCourseContext();
   
   if (error) { <h1>Error loading the data</h1>};
   if (isLoading) {<h1>Data is loading</h1>};
