@@ -49,7 +49,7 @@ const Form = ({course}: FormProps) => {
                     <h1 className='font-semibold'>Number</h1>
                     <input {...register("number")} className='text-gray-800 block border rounded pl-1'/>
                 </div>
-                {errors.term && <p>Error in form inputs</p>} 
+                {(errors.term || errors.meets || errors.title || errors.number) && <p>Error in form inputs</p>} 
                 <div className='flex flex-row items-center justify-center gap-8'>
                     <button onClick={() => navigate({to: '/'})} className='p-2 border rounded'>Cancel</button>
                     <input type={"submit"} value={"Submit"} className='p-2 border rounded'/>
