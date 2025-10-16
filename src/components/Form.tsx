@@ -3,7 +3,6 @@ import { useNavigate } from '@tanstack/react-router';
 import { useForm } from "react-hook-form";
 import { useState } from 'react';
 import { z } from 'zod';
-import { hasConflict } from '../utilities/checkConflicts';
 import { zodResolver } from '@hookform/resolvers/zod'
 
 interface FormProps {
@@ -28,7 +27,7 @@ const Form = ({course}: FormProps) => {
             number: course.number
         }
     });
-    const [data, setData] = useState("");
+    const [_, setData] = useState("");
 
     return (
         <div className='flex items-center justify-center h-screen '>
