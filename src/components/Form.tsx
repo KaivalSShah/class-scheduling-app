@@ -1,9 +1,9 @@
 import type { Course } from '../types';
 import { useNavigate } from '@tanstack/react-router';
 import { useForm } from "react-hook-form";
-import { useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod'
+import { getDatabase, ref, update} from 'firebase/database';
 
 interface FormProps {
     course: Course;
@@ -27,12 +27,18 @@ const Form = ({course}: FormProps) => {
             number: course.number
         }
     });
-    const [_, setData] = useState("");
+
+
+    const onSubmitForm = async (updatedData: z.infer<typeof courseValidationSchema>) => {
+        const db = getDatabase();
+        await update(ref(db, `courses/${course.term.charAt(0)}${course.number}`), updatedData);
+        navigate({to: '/'});
+    };
 
     return (
         <div className='flex items-center justify-center h-screen '>
             
-            <form onSubmit={handleSubmit((data) => setData(JSON.stringify(data)))} className='bg-gray-200 p-10 rounded border'>
+            <form onSubmit={handleSubmit(onSubmitForm)} className='bg-gray-200 p-10 rounded border'>
                 <div className='mb-5 flex flex-col'>
                     <h1 className='font-semibold'>Term</h1>
                     <input {...register("term")} className='text-gray-800 block border rounded pl-1'/>
