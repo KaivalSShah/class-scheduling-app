@@ -1,6 +1,6 @@
 import type { Course } from '../types';
 import { useNavigate } from '@tanstack/react-router';
-import { useAuthState } from '../utilities/firebase'
+import { useAuthState, useDataQuery } from '../utilities/firebase'
 
 export interface CardProps {
     course: Course
@@ -12,11 +12,12 @@ export interface CardProps {
 const Card = ({ course, changeSelectedCourses, isSelected, isConflict }: CardProps) => {
     const navigate = useNavigate();
     const { user } = useAuthState();
+    const [isAdmin, ,] =  useDataQuery(`/admins/${user?.uid || 'guest'}`);
 
     return (
         <div className="relative inline-block">
             <div className={`relative border-2 border-gray-400 border-solid rounded-[1vw] flex flex-col p-5 text-left h-full ${isConflict ? "bg-red-200" : isSelected ? "bg-blue-200" : ""}`}>
-                {user && <button type="button" onClick={(e) => {
+                {isAdmin == true && <button type="button" onClick={(e) => {
                         e.stopPropagation();
                         navigate({ to: `/${course.number}` });
                     }}

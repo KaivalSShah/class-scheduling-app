@@ -20,7 +20,7 @@ const database = getDatabase(firebase);
 
 type JsonQueryResult<T> = [T | undefined, boolean, Error | null];
 
-export function useDataQuery<T>(url: string): JsonQueryResult<T> {
+export function useDataQuery<T>(url?: string): JsonQueryResult<T> {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -29,7 +29,7 @@ export function useDataQuery<T>(url: string): JsonQueryResult<T> {
     setData(undefined);
     setLoading(true);
     setError((null));
-    return onValue(ref(database), (snapshot) => {
+    return onValue(url ? ref(database, url) : ref(database), (snapshot) => {
         setData( snapshot.val() );
         console.log("got a data")
         setLoading(false);
