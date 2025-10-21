@@ -1,3 +1,4 @@
+import { AuthBanner } from './components/AuthBanner';
 import Banner from './components/Banner';
 import TermPage from './components/TermPage';
 import type { Course } from './types';
@@ -14,6 +15,7 @@ const App = () => {
 
   return (
     <div className="text-center">
+      <AuthBanner/>
       <Banner banner={scheduleData.title}/>
       <TermPage courses={courses}/>
     </div>
