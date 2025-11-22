@@ -15,7 +15,7 @@ const Card = ({ course, changeSelectedCourses, isSelected, isConflict }: CardPro
     const [isAdmin, ,] =  useDataQuery(`/admins/${user?.uid || 'guest'}`);
 
     return (
-        <div className="relative inline-block">
+        <div className="relative inline-block" data-cy="course">
             <div className={`relative border-2 border-gray-400 border-solid rounded-[1vw] flex flex-col p-5 text-left h-full ${isConflict ? "bg-red-200" : isSelected ? "bg-blue-200" : ""}`}>
                 {isAdmin == true && <button type="button" onClick={(e) => {
                         e.stopPropagation();
